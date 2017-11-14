@@ -73,6 +73,22 @@ describe("Objects", () => {
   it("am i not a function", () => {
     expect(amI.function("fn")).to.equal(false);
   });
+});
 
-  
+describe("Number", () => {
+  it("am i an integer", () => {
+    expect(amI.integer(42)).to.equal(true);
+  });
+
+  it("am i not a integer", () => {
+    expect(amI.integer(42.3)).to.equal(false);
+  });
+
+  it("am i an safeInteger", () => {
+    expect(amI.safeInteger(Number.MAX_SAFE_INTEGER)).to.equal(true);
+  });
+
+  it("am i not a safeInteger", () => {
+    expect(amI.safeInteger(Math.pow(2, 53))).to.equal(false);
+  });
 });

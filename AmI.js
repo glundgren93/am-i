@@ -34,19 +34,17 @@ addPredicate("undefined", val => val === undefined);
 addPredicate("null", val => val === null);
 addPredicate("primitive", val => {
   return (
-    string(val) ||
-    number(val) ||
-    boolean(val) ||
-    symbol(val) ||
-    val === undefined ||
-    val === null
+    string(val) || number(val) || boolean(val) || symbol(val) || val === undefined || val === null
   );
 });
 
 addPredicate("NaN", val => isNaN(val));
 addPredicate("function", val => typeof val === "function");
-addPredicate("function", val => typeof val === "function");
-addPredicate("function", val => typeof val === "function");
-addPredicate("function", val => typeof val === "function");
+
+/**
+ * Number
+ */
+addPredicate("integer", val => Number.isInteger(val));
+addPredicate("safeInteger", val => Number.isSafeInteger(val));
 
 module.exports = amI;
