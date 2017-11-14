@@ -2,18 +2,10 @@
 
 let amI = { not: {} };
 
-const string = val => {
-  return typeof val === "string";
-};
-const number = val => {
-  return typeof val === "number";
-};
-const boolean = val => {
-  return typeof val === "boolean";
-};
-const symbol = val => {
-  return typeof val === "symbol";
-};
+/**
+ * https://stackoverflow.com/questions/3250379/what-is-the-call-function-doing-in-this-javascript-statement/3250415#3250415
+ */
+const toString = Object.prototype.toString;
 
 let addPredicate = (name, predicate) => {
   amI[name] = predicate;
@@ -26,20 +18,57 @@ let addPredicate = (name, predicate) => {
 /**
  * Primitives
  */
-addPredicate("string", val => string(val));
-addPredicate("number", val => number(val));
-addPredicate("boolean", val => boolean(val));
-addPredicate("symbol", val => symbol(val));
-addPredicate("undefined", val => val === undefined);
-addPredicate("null", val => val === null);
-addPredicate("primitive", val => {
+addPredicate("string", val => {
+  return typeof val === "string" || toString.call(val) === "[object String]";
+});
+
+addPredicate("number", val => {
   return (
-    string(val) || number(val) || boolean(val) || symbol(val) || val === undefined || val === null
+    amI.not.nan(val) && // typeof NaN === "number"
+    (typeof val === "number" || toString.call(val) === "[object Number]")
   );
 });
 
-addPredicate("NaN", val => isNaN(val));
-addPredicate("function", val => typeof val === "function");
+addPredicate("boolean", val => {
+  return typeof val === "boolean" || toString.call(val) === "[object Boolean]";
+});
+
+addPredicate("symbol", val => {
+  return typeof val === "symbol" || toString.call(val) === "[object Symbol]";
+});
+
+addPredicate("undefined", val => {
+  return val === undefined || toString.call(val) === "[object Undefined]";
+});
+
+addPredicate("null", val => {
+  return val === null || toString.call(val) === "[object Null]";
+});
+
+addPredicate("primitive", val => {
+  return (
+    amI.string(val) ||
+    amI.number(val) ||
+    amI.boolean(val) ||
+    amI.symbol(val) ||
+    amI.undefined(val) ||
+    amI.null(val)
+  );
+});
+
+addPredicate("nan", val => isNaN(parseFloat(val)));
+
+addPredicate(
+  "function",
+  val => typeof val === "function" || toString.call(val) === "[object Function]"
+);
+
+/**
+ * Array
+ */
+addPredicate("array", val => {
+  return Array.isArray(val) || toString.call(val) === "[object Array]";
+});
 
 /**
  * Number
