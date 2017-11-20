@@ -10,8 +10,8 @@ const toString = Object.prototype.toString;
 let addPredicate = (name, predicate) => {
   amI[name] = predicate;
 
-  amI.not[name] = val => {
-    return !predicate.call(null, val);
+  amI.not[name] = (...args) => {
+    return !predicate.apply(null, Array.prototype.slice.call(args));
   };
 };
 
@@ -56,13 +56,6 @@ addPredicate("primitive", val => {
   );
 });
 
-addPredicate("nan", val => isNaN(parseFloat(val)));
-
-addPredicate(
-  "function",
-  val => typeof val === "function" || toString.call(val) === "[object Function]"
-);
-
 /**
  * Array
  */
@@ -70,10 +63,45 @@ addPredicate("array", val => {
   return Array.isArray(val) || toString.call(val) === "[object Array]";
 });
 
+addPredicate(
+  "function",
+  val => typeof val === "function" || toString.call(val) === "[object Function]"
+);
+
+/**
+ * Object
+ */
+addPredicate("object", val => toString.call(val) === "[object Object]");
+
 /**
  * Number
  */
-addPredicate("integer", val => Number.isInteger(val));
-addPredicate("safeInteger", val => Number.isSafeInteger(val));
+addPredicate("nan", val => isNaN(parseFloat(val)));
+
+addPredicate("odd", val => amI.number(val) && val % 2 !== 0);
+addPredicate("even", val => amI.number(val) && val % 2 === 0);
+
+addPredicate("infite", val => !isFinite(val));
+addPredicate("finite", val => isFinite(val));
+
+addPredicate("positive", val => amI.number(val) && val > 0);
+addPredicate("negative", val => amI.number(val) && val < 0);
+
+addPredicate(
+  "above",
+  (val, max) => amI.number(val) && amI.number(max) && val > max
+);
+
+addPredicate(
+  "under",
+  (val, max) => amI.number(val) && amI.number(max) && val < max
+);
+
+addPredicate("integer", val => amI.number(val) && Number.isInteger(val));
+
+addPredicate(
+  "safeInteger",
+  val => amI.number(val) && Number.isSafeInteger(val)
+);
 
 module.exports = amI;

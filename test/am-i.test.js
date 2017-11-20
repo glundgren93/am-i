@@ -86,6 +86,7 @@ describe("Array", () => {
 
 describe("Objects", () => {
   let fn = () => {};
+  let obj = {};
 
   // Function
   it("am i a function", () => {
@@ -94,6 +95,17 @@ describe("Objects", () => {
 
   it("am i not a function", () => {
     expect(amI.not.function(fn)).to.equal(false);
+  });
+
+  // Object
+  it("am i an object", () => {
+    expect(amI.object(obj)).to.equal(true);
+    expect(amI.object(fn)).to.equal(false);
+  });
+
+  it("am i not an object", () => {
+    expect(amI.not.object(fn)).to.equal(true);
+    expect(amI.not.object(obj)).to.equal(false);
   });
 });
 
@@ -110,10 +122,112 @@ describe("Number", () => {
   // Integer
   it("am i an integer", () => {
     expect(amI.integer(42)).to.equal(true);
+    expect(amI.integer("42")).to.equal(false);
   });
 
   it("am i not a integer", () => {
     expect(amI.not.integer(42)).to.equal(false);
+    expect(amI.not.integer("42")).to.equal(true);
+  });
+
+  // Even
+  it("am i an even number", () => {
+    expect(amI.even(42)).to.equal(true);
+    expect(amI.even(41)).to.equal(false);
+    expect(amI.even("42")).to.equal(false);
+  });
+
+  it("am i not an even number", () => {
+    expect(amI.not.even(41)).to.equal(true);
+    expect(amI.not.even(42)).to.equal(false);
+    expect(amI.not.even("41")).to.equal(true);
+  });
+
+  // Odd
+  it("am i an odd number", () => {
+    expect(amI.odd(41)).to.equal(true);
+    expect(amI.odd(42)).to.equal(false);
+    expect(amI.odd("41")).to.equal(false);
+  });
+
+  it("am i not an odd number", () => {
+    expect(amI.not.odd(42)).to.equal(true);
+    expect(amI.not.odd(41)).to.equal(false);
+    expect(amI.not.odd("42")).to.equal(true);
+  });
+
+  // Infinite
+  it("am i an infinite number", () => {
+    expect(amI.infite(Infinity)).to.equal(true);
+  });
+
+  it("am i not an infinite number", () => {
+    expect(amI.not.infite(Infinity)).to.equal(false);
+  });
+
+  // Finite
+  it("am i a finite number", () => {
+    expect(amI.finite(910)).to.equal(true);
+  });
+
+  it("am i not a finite number", () => {
+    expect(amI.not.finite(910)).to.equal(false);
+  });
+
+  // Positive Number
+  it("am i a positive number", () => {
+    expect(amI.positive(91)).to.equal(true);
+    expect(amI.positive(-1)).to.equal(false);
+    expect(amI.positive("1")).to.equal(false);
+  });
+
+  it("am i not a positive number", () => {
+    expect(amI.not.positive(-91)).to.equal(true);
+    expect(amI.not.positive(91)).to.equal(false);
+    expect(amI.not.positive("91")).to.equal(true);
+  });
+
+  // Negative Number
+  it("am i a negative number", () => {
+    expect(amI.negative(-91)).to.equal(true);
+    expect(amI.negative(1)).to.equal(false);
+    expect(amI.negative("-1")).to.equal(false);
+  });
+
+  it("am i not a negative number", () => {
+    expect(amI.not.negative(91)).to.equal(true);
+    expect(amI.not.negative(-91)).to.equal(false);
+    expect(amI.not.negative("-91")).to.equal(true);
+  });
+
+  // Above Number
+  it("am i above", () => {
+    expect(amI.above(91, 90)).to.equal(true);
+    expect(amI.above(91, "90")).to.equal(false);
+    expect(amI.above("91", "90")).to.equal(false);
+    expect(amI.above("91", 90)).to.equal(false);
+  });
+
+  it("am i not above", () => {
+    expect(amI.not.above(91, 90)).to.equal(false);
+    expect(amI.not.above("91", 90)).to.equal(true);
+    expect(amI.not.above(91, "90")).to.equal(true);
+    expect(amI.not.above("91", "90")).to.equal(true);
+  });
+
+  // Under Number
+  it("am i under", () => {
+    expect(amI.under(90, 91)).to.equal(true);
+    expect(amI.under(90, "91")).to.equal(false);
+    expect(amI.under("90", "91")).to.equal(false);
+    expect(amI.under("90", 91)).to.equal(false);
+  });
+
+  it("am i not under", () => {
+    expect(amI.not.under(90, 91)).to.equal(false);
+    expect(amI.not.under("90", 91)).to.equal(true);
+    expect(amI.not.under(90, "91")).to.equal(true);
+    expect(amI.not.under("90", "90")).to.equal(true);
   });
 
   // Safe Integer
