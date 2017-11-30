@@ -4,6 +4,23 @@ const amI = require("../AmI");
 const expect = chai.expect;
 
 describe("Primitives", () => {
+  // String
+  it("am i real", () => {
+    expect(amI.real(null)).to.equal(false);
+    expect(amI.real({})).to.equal(true);
+    expect(amI.real("test")).to.equal(true);
+    expect(amI.real(3)).to.equal(true);
+  });
+
+  it("am i not real", () => {
+    expect(amI.not.real(null)).to.equal(true);
+    expect(amI.not.real({})).to.equal(false);
+    expect(amI.not.real("test")).to.equal(false);
+    expect(amI.not.real(3)).to.equal(false);
+  });
+})
+
+describe("Primitives", () => {
   let primitive = "primitive";
 
   // String
@@ -106,6 +123,19 @@ describe("Objects", () => {
   it("am i not an object", () => {
     expect(amI.not.object(fn)).to.equal(true);
     expect(amI.not.object(obj)).to.equal(false);
+  });
+
+  // Empty Object
+  it("am i an empty object", () => {
+    expect(amI.emptyObject({})).to.equal(true);
+    expect(amI.emptyObject({ a: "a" })).to.equal(false);
+    expect(amI.emptyObject([])).to.equal(false);
+  });
+
+  it("am i not an object", () => {
+    expect(amI.not.emptyObject({})).to.equal(false);
+    expect(amI.not.emptyObject({a: "a"})).to.equal(true);
+    expect(amI.not.emptyObject([])).to.equal(true);
   });
 });
 
@@ -237,5 +267,45 @@ describe("Number", () => {
 
   it("am i not a safeInteger", () => {
     expect(amI.not.safeInteger(Number.MAX_SAFE_INTEGER)).to.equal(false);
+  });
+});
+
+describe("String", () => {
+  it("am i an empty string", () => {
+    expect(amI.emptyString("")).to.equal(true);
+    expect(amI.emptyString("test")).to.equal(false);
+  });
+
+  it("am i not an empty string", () => {
+    expect(amI.not.emptyString("test")).to.equal(true);
+    expect(amI.not.emptyString("")).to.equal(false);
+  });
+
+  it("am i a prefix", () => {
+    expect(amI.prefixOf("test", "testing")).to.equal(true);
+    expect(amI.prefixOf("tes", "testing")).to.equal(true);
+    expect(amI.prefixOf("ing", "testing")).to.equal(false);
+    expect(amI.prefixOf("testing", "test")).to.equal(false);
+  });
+
+  it("am i not a prefix", () => {
+    expect(amI.not.prefixOf("test", "testing")).to.equal(false);
+    expect(amI.not.prefixOf("tes", "testing")).to.equal(false);
+    expect(amI.not.prefixOf("ing", "testing")).to.equal(true);
+    expect(amI.not.prefixOf("testing", "test")).to.equal(true);
+  });
+
+  it("am i a suffix", () => {
+    expect(amI.suffixOf("test", "testing")).to.equal(false);
+    expect(amI.suffixOf("tes", "testing")).to.equal(false);
+    expect(amI.suffixOf("ing", "testing")).to.equal(true);
+    expect(amI.suffixOf("ting", "testing")).to.equal(true);
+  });
+
+  it("am i not a suffix", () => {
+    expect(amI.not.suffixOf("test", "testing")).to.equal(true);
+    expect(amI.not.suffixOf("tes", "testing")).to.equal(true);
+    expect(amI.not.suffixOf("ing", "testing")).to.equal(false);
+    expect(amI.not.suffixOf("testing", "test")).to.equal(true);
   });
 });

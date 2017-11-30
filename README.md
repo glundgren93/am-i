@@ -1,0 +1,41 @@
+### Predicate library based on is.js(https://github.com/pwnn/is.js)
+
+- [x] null
+- [x] undefined
+- [x] exists
+- [ ] nil
+- [x] number
+- [ ] numeral
+- [x] nan
+- [ ] odd number
+- [x] even number
+- [x] finite number
+- [x] infinite number
+- [x] positive number
+- [x] negative number
+- [x] above number
+- [x] under number
+- [x] integer
+- [x] safe integer
+- [x] string
+- [x] empty string
+- [ ] substring
+- [x] prefix
+- [x] suffix
+- [x] boolean
+- [x] object
+- [x] empty object
+- [ ] object property defined
+- [x] array
+- [ ] array like object
+- [ ] in array
+- [x] symbol
+- [ ] palindrome
+- [x] function
+- [ ] ie
+- [ ] chrome
+- [ ] firefox
+- [ ] opera
+- [ ] safari
+- [ ] online
+- [ ] offline
