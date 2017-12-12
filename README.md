@@ -1,6 +1,13 @@
 # am-i [![Build Status](https://travis-ci.org/glundgren93/am-i.svg?branch=master)](https://travis-ci.org/glundgren93/am-i) 
 
-### Predicate library with no dependecies based on is.js(https://github.com/pwnn/is.js)
+
+## Install
+
+```
+$ npm install am-i
+```
+
+### Predicate library with no dependencies based on is.js(https://github.com/pwnn/is.js)
 
 - [x] null
 - [x] undefined
