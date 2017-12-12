@@ -1,3 +1,5 @@
+# am-i [![Build Status](https://travis-ci.org/glundgren93/am-i.svg?branch=master)](https://travis-ci.org/glundgren93/am-i) 
+
 ### Predicate library based on is.js(https://github.com/pwnn/is.js)
 
 - [x] null
