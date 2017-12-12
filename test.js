@@ -122,12 +122,94 @@ describe("Primitives", () => {
 
 describe("Array", () => {
   let arr = [1, 2, 3];
+  let int8Arr = new Int8Array();
+  let uInt8Arr = new Uint8Array();
+  let uInt8ClampedArr = new Uint8ClampedArray();
+  let int16Arr = new Int16Array();
+  let uInt16Arr = new Uint16Array();
+  let int32Arr = new Int32Array();
+  let uInt32Arr = new Uint32Array();
+  let float32Arr = new Float32Array();
+  let float64Arr = new Float64Array();
+
   it("am i an array", () => {
     expect(amI.array(arr)).to.equal(true);
   });
 
   it("am i not an array", () => {
     expect(amI.not.array(arr)).to.equal(false);
+  });
+
+  it("am i an Int8Array", () => {
+    expect(amI.int8Array(int8Arr)).to.equal(true);
+  });
+
+  it("am i not an Int8Array", () => {
+    expect(amI.not.int8Array(int8Arr)).to.equal(false);
+  });
+
+  it("am i an Uint8Array", () => {
+    expect(amI.uInt8Array(uInt8Arr)).to.equal(true);
+  });
+
+  it("am i not an Uint8Array", () => {
+    expect(amI.not.uInt8Array(uInt8Arr)).to.equal(false);
+  });
+
+  it("am i an Uint8ClampedArray", () => {
+    expect(amI.int8ClampedArray(uInt8ClampedArr)).to.equal(true);
+  });
+
+  it("am i not an Uint8ClampedArray", () => {
+    expect(amI.not.int8ClampedArray(uInt8ClampedArr)).to.equal(false);
+  });
+
+  it("am i an Int16Array", () => {
+    expect(amI.int16Array(int16Arr)).to.equal(true);
+  });
+
+  it("am i not an Int16Array", () => {
+    expect(amI.not.int16Array(int16Arr)).to.equal(false);
+  });
+
+  it("am i an Uint16Array", () => {
+    expect(amI.uInt16Array(uInt16Arr)).to.equal(true);
+  });
+
+  it("am i not an Uint16Array", () => {
+    expect(amI.not.uInt16Array(uInt16Arr)).to.equal(false);
+  });
+
+  it("am i an Int32Array", () => {
+    expect(amI.int32Array(int32Arr)).to.equal(true);
+  });
+
+  it("am i not an Int32Array", () => {
+    expect(amI.not.int32Array(int32Arr)).to.equal(false);
+  });
+
+  it("am i an Uint32Array", () => {
+    expect(amI.uInt32Array(uInt32Arr)).to.equal(true);
+  });
+
+  it("am i not an Uint32Array", () => {
+    expect(amI.not.uInt32Array(uInt32Arr)).to.equal(false);
+  });
+
+  it("am i an Float32Array", () => {
+    expect(amI.float32Array(float32Arr)).to.equal(true);
+  });
+
+  it("am i not an Float32Array", () => {
+    expect(amI.not.float32Array(float32Arr)).to.equal(false);
+  });
+
+  it("am i an Float64Array", () => {
+    expect(amI.float64Array(float64Arr)).to.equal(true);
+  });
+
+  it("am i not an Float64Array", () => {
+    expect(amI.not.float64Array(float64Arr)).to.equal(false);
   });
 });
 
@@ -350,5 +432,19 @@ describe("String", () => {
     expect(amI.not.suffixOf("tes", "testing")).to.equal(true);
     expect(amI.not.suffixOf("ing", "testing")).to.equal(false);
     expect(amI.not.suffixOf("testing", "test")).to.equal(true);
+  });
+
+  it("am i a substring of", () => {
+    expect(amI.substringOf("test", "testing")).to.equal(true);
+    expect(amI.substringOf("tes", "testing")).to.equal(true);
+    expect(amI.substringOf("ing", "testing")).to.equal(true);
+    expect(amI.substringOf("tingfeafae", "testing")).to.equal(false);
+  });
+
+  it("am i not substring of", () => {
+    expect(amI.not.substringOf("test", "testing")).to.equal(false);
+    expect(amI.not.substringOf("tes", "testing")).to.equal(false);
+    expect(amI.not.substringOf("ing", "testing")).to.equal(false);
+    expect(amI.not.substringOf("testing", "test")).to.equal(true);
   });
 });

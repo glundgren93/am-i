@@ -31,7 +31,7 @@ $ npm install am-i
 - [x] safe integer
 - [x] string
 - [x] empty string
-- [ ] substring
+- [x] substring
 - [x] prefix
 - [x] suffix
 - [x] boolean
@@ -39,6 +39,15 @@ $ npm install am-i
 - [x] empty object
 - [ ] object property defined
 - [x] array
+- [x] Int8Array
+- [x] Uint8Array
+- [x] Uint8ClampedArray
+- [x] Int16Array
+- [x] Uint16Array
+- [x] Int32Array
+- [x] Uint32Array
+- [x] Float32Array
+- [x] Float64Array
 - [ ] array like object
 - [ ] in array
 - [x] symbol
