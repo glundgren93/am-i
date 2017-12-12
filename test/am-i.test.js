@@ -3,22 +3,52 @@ const amI = require("../AmI");
 
 const expect = chai.expect;
 
-describe("Primitives", () => {
-  // String
+describe("Existence", () => {
+  // Exists
   it("am i real", () => {
-    expect(amI.real(null)).to.equal(false);
-    expect(amI.real({})).to.equal(true);
-    expect(amI.real("test")).to.equal(true);
-    expect(amI.real(3)).to.equal(true);
+    expect(amI.exists(null)).to.equal(false);
+    expect(amI.exists({})).to.equal(true);
+    expect(amI.exists("test")).to.equal(true);
+    expect(amI.exists(3)).to.equal(true);
   });
 
   it("am i not real", () => {
-    expect(amI.not.real(null)).to.equal(true);
-    expect(amI.not.real({})).to.equal(false);
-    expect(amI.not.real("test")).to.equal(false);
-    expect(amI.not.real(3)).to.equal(false);
+    expect(amI.not.exists(null)).to.equal(true);
+    expect(amI.not.exists({})).to.equal(false);
+    expect(amI.not.exists("test")).to.equal(false);
+    expect(amI.not.exists(3)).to.equal(false);
   });
-})
+
+  // Truthy
+  it("am i truthy", () => {
+    expect(amI.truthy(null)).to.equal(false);
+    expect(amI.truthy({})).to.equal(true);
+    expect(amI.truthy("test")).to.equal(true);
+    expect(amI.truthy(3)).to.equal(true);
+  });
+
+  it("am i not truthy", () => {
+    expect(amI.not.truthy(null)).to.equal(true);
+    expect(amI.not.truthy({})).to.equal(false);
+    expect(amI.not.truthy("test")).to.equal(false);
+    expect(amI.not.truthy(3)).to.equal(false);
+  });
+
+  // Falsy
+  it("am i falsy", () => {
+    expect(amI.falsy(null)).to.equal(true);
+    expect(amI.falsy({})).to.equal(false);
+    expect(amI.falsy("test")).to.equal(false);
+    expect(amI.falsy(3)).to.equal(false);
+  });
+
+  it("am i not falsy", () => {
+    expect(amI.not.falsy(null)).to.equal(false);
+    expect(amI.not.falsy({})).to.equal(true);
+    expect(amI.not.falsy("test")).to.equal(true);
+    expect(amI.not.falsy(3)).to.equal(true);
+  });
+});
 
 describe("Primitives", () => {
   let primitive = "primitive";
@@ -101,11 +131,12 @@ describe("Array", () => {
   });
 });
 
-describe("Objects", () => {
+describe("Function", () => {
   let fn = () => {};
-  let obj = {};
+  let asyncFn = async () => {
+    await 6;
+  };
 
-  // Function
   it("am i a function", () => {
     expect(amI.function(fn)).to.equal(true);
   });
@@ -114,14 +145,26 @@ describe("Objects", () => {
     expect(amI.not.function(fn)).to.equal(false);
   });
 
+  it("am i async", () => {
+    expect(amI.async(asyncFn)).to.equal(true);
+  });
+
+  it("am i not async", () => {
+    expect(amI.not.async(asyncFn)).to.equal(false);
+  });
+});
+
+describe("Objects", () => {
+  let obj = {};
+
   // Object
   it("am i an object", () => {
     expect(amI.object(obj)).to.equal(true);
-    expect(amI.object(fn)).to.equal(false);
+    expect(amI.object("a")).to.equal(false);
   });
 
   it("am i not an object", () => {
-    expect(amI.not.object(fn)).to.equal(true);
+    expect(amI.not.object("a")).to.equal(true);
     expect(amI.not.object(obj)).to.equal(false);
   });
 
@@ -134,7 +177,7 @@ describe("Objects", () => {
 
   it("am i not an object", () => {
     expect(amI.not.emptyObject({})).to.equal(false);
-    expect(amI.not.emptyObject({a: "a"})).to.equal(true);
+    expect(amI.not.emptyObject({ a: "a" })).to.equal(true);
     expect(amI.not.emptyObject([])).to.equal(true);
   });
 });

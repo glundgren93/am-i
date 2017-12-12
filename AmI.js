@@ -2,18 +2,19 @@
 
 let amI = { not: {} };
 
-/**
- * https://stackoverflow.com/questions/3250379/what-is-the-call-function-doing-in-this-javascript-statement/3250415#3250415
- */
-const toString = Object.prototype.toString;
-
-// https://stackoverflow.com/a/34491287/1810241
-let isEmpty = obj => {
-  for (var x in obj) {
-    return false;
-  }
-  return true;
+const Types = {
+  string: "string",
+  number: "number",
+  boolean: "boolean",
+  symbol: "symbol",
+  undefined: "undefined",
+  null: "null",
+  function: "function",
+  asyncfunction: "asyncfunction",
+  object: "object"
 };
+
+const toString = Object.prototype.toString;
 
 let addPredicate = (name, predicate) => {
   amI[name] = predicate;
@@ -23,32 +24,61 @@ let addPredicate = (name, predicate) => {
   };
 };
 
-addPredicate("real", val => val !== null);
+// https://stackoverflow.com/a/34491287/1810241
+let isEmpty = obj => {
+  for (var x in obj) {
+    return false;
+  }
+  return true;
+};
+
+let getObjectType = val => {
+  //   https://stackoverflow.com/questions/3250379/what-is-the-call-function-doing-in-this-javascript-statement/3250415#3250415
+  let name = toString
+    .call(val)
+    .slice(8, -1)
+    .toLowerCase(); // remove '[object' and ']'
+
+  if (name) {
+    return Types[name];
+  }
+
+  return null;
+};
+
+let isOfType = type => val => type === getObjectType(val);
+
+let isString = isOfType("string");
+let isNumber = isOfType("number");
+let isBoolean = isOfType("boolean");
+let isSymbol = isOfType("symbol");
+let isUndefined = isOfType("undefined");
+let isNull = isOfType("null");
+let isFunction = isOfType("function");
+let isAsyncFunction = isOfType("asyncfunction");
+let isObject = isOfType("object");
+let isArray = isOfType("array");
+
+/**
+ * Existence
+ */
+addPredicate("exists", val => val !== null);
+addPredicate("truthy", val => Boolean(val));
+addPredicate("falsy", val => !val);
 
 /**
  * Primitives
  */
-addPredicate("string", val => {
-  return typeof val === "string" || toString.call(val) === "[object String]";
-});
-addPredicate("number", val => {
-  return (
-    amI.not.nan(val) && // typeof NaN === "number"
-    (typeof val === "number" || toString.call(val) === "[object Number]")
-  );
-});
-addPredicate("boolean", val => {
-  return typeof val === "boolean" || toString.call(val) === "[object Boolean]";
-});
-addPredicate("symbol", val => {
-  return typeof val === "symbol" || toString.call(val) === "[object Symbol]";
-});
-addPredicate("undefined", val => {
-  return val === undefined || toString.call(val) === "[object Undefined]";
-});
-addPredicate("null", val => {
-  return val === null || toString.call(val) === "[object Null]";
-});
+addPredicate("string", val => isString(val));
+addPredicate(
+  "number",
+  val => amI.not.nan(val) && isNumber(val) // typeof NaN === "number"
+);
+addPredicate("boolean", val => isBoolean(val));
+addPredicate("symbol", val => isSymbol(val));
+addPredicate("undefined", val => isUndefined(val));
+addPredicate("null", val => isNull(val));
+
 addPredicate("primitive", val => {
   return (
     amI.string(val) ||
@@ -64,18 +94,19 @@ addPredicate("primitive", val => {
  * Array
  */
 addPredicate("array", val => {
-  return Array.isArray(val) || toString.call(val) === "[object Array]";
+  return Array.isArray(val) || isArray(val);
 });
 
-addPredicate(
-  "function",
-  val => typeof val === "function" || toString.call(val) === "[object Function]"
-);
+/**
+ * Function
+ */
+addPredicate("function", val => isFunction(val));
+addPredicate("async", val => isAsyncFunction(val));
 
 /**
  * Object
  */
-addPredicate("object", val => toString.call(val) === "[object Object]");
+addPredicate("object", val => isObject(val));
 addPredicate("emptyObject", val => amI.object(val) && isEmpty(val));
 
 /**

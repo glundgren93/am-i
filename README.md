@@ -3,11 +3,13 @@
 - [x] null
 - [x] undefined
 - [x] exists
+- [x] truthy
+- [x] falsy
 - [ ] nil
 - [x] number
 - [ ] numeral
 - [x] nan
-- [ ] odd number
+- [x] odd number
 - [x] even number
 - [x] finite number
 - [x] infinite number
@@ -32,6 +34,7 @@
 - [x] symbol
 - [ ] palindrome
 - [x] function
+- [x] async function
 - [ ] ie
 - [ ] chrome
 - [ ] firefox
