@@ -7,6 +7,7 @@
 $ npm install am-i
 ```
 
+
 ### Predicate library with no dependencies based on is.js(https://github.com/pwnn/is.js)
 
 - [x] null
@@ -51,3 +52,18 @@ $ npm install am-i
 - [ ] safari
 - [ ] online
 - [ ] offline
+
+## Usage
+
+```js
+const amI = require("am-i");
+
+const obj = {
+	foo: "bar"
+};
+
+amI.object(obj) // true
+amI.string(obj) // false
+
+```
+
